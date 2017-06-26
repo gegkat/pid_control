@@ -22,7 +22,8 @@ void PID::Init(double Kp_, double Ki_, double Kd_, double throttle_value_) {
 }
 
 void PID::UpdateError(double cte) {
-    d_error = cte - p_error;
+    double filter_coeff = 0.9;
+    d_error = (cte - p_error)*filter_coeff + d_error*(1-filter_coeff);
     p_error = cte;
     i_error += cte;
 }
