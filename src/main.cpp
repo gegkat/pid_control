@@ -43,15 +43,15 @@ int main(int argc, char* argv[])
   // Initialize the pid variable.
   pid.Init(Kp, Ki, Kd);
   // 0.08, 0.001, 1.8 at 1.0 works well 
-
+    
   h.onMessage([&pid](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length, uWS::OpCode opCode) {
     // "42" at the start of the message means there's a websocket message event.
     // The 4 signifies a websocket message
     // The 2 signifies a websocket event
 
-    double THROTTLE_CTE_COEFFICIENT = 0.7; 
-    double MIN_SPEED = 50;
-    double MIN_THROTTLE = 0.1;
+    double THROTTLE_CTE_COEFFICIENT = 0.8; 
+    double MIN_SPEED = 55;
+    double MIN_THROTTLE = 0.05;
     double MAX_THROTTLE = 1.0;
 
     if (length && length > 2 && data[0] == '4' && data[1] == '2')
