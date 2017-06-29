@@ -16,7 +16,6 @@ public:
   double Kp;
   double Ki;
   double Kd;
-  double throttle_value;
 
   /*
   * Constructor
@@ -31,7 +30,7 @@ public:
   /*
   * Initialize PID.
   */
-  void Init(double Kp_, double Ki_, double Kd_, double throttle_value_);
+  void Init(double Kp_, double Ki_, double Kd_);
 
   /*
   * Update the PID error variables given cross track error.
