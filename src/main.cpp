@@ -32,17 +32,24 @@ std::string hasData(std::string s) {
 int main(int argc, char* argv[])
 {
 
-  // std::cout << atof(argv[0]) << endl;
-  double Kp = atof(argv[1]);
-  double Ki = atof(argv[2]);
-  double Kd = atof(argv[3]);
+  double Kp, Ki, Kd;
+  if (argc == 4) {
+    Kp = atof(argv[1]);
+    Ki = atof(argv[2]);
+    Kd = atof(argv[3]);
+  } else {
+    Kp = 0.08;
+    Ki = 0.001;
+    Kd = 1.8;
+  }
 
   uWS::Hub h;
 
   PID pid;
   // Initialize the pid variable.
   pid.Init(Kp, Ki, Kd);
-  // 0.08, 0.001, 1.8 at 1.0 works well 
+  std::cout << "Kp: " << Kp << " Ki: " << Ki << " Kd: " << Kd << std::endl;
+  std::cout << "cte, steer, throttle, speed" << std::endl;
     
   h.onMessage([&pid](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length, uWS::OpCode opCode) {
     // "42" at the start of the message means there's a websocket message event.
@@ -92,13 +99,13 @@ int main(int argc, char* argv[])
 
 
           // DEBUG
-          std::cout << "CTE: " << cte << " Steering Value: " << steer_value << std::endl;
+          //std::cout << "CTE: " << cte << " Steering Value: " << steer_value << std::endl;
 
           // send data
           json msgJson;
           msgJson["steering_angle"] = steer_value;
           msgJson["throttle"] = throttle;
-          std::cout << cte << " " << throttle << std::endl;
+          std::cout << cte << ", " << steer_value << ", " << throttle << ", " << speed << std::endl;
           auto msg = "42[\"steer\"," + msgJson.dump() + "]";
           //std::cout << msg << std::endl;
           ws.send(msg.data(), msg.length(), uWS::OpCode::TEXT);
